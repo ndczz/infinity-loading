@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <declare-styleable name="InfinityLoading">
+        <attr name="backColor" format="color" />
+        <attr name="progressColor" format="color" />
+        <attr name="strokeWidth" format="dimension" />
+        <attr name="drawBack" format="boolean" />
+    </declare-styleable>
+</resources>
