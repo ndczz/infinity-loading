@@ -5,11 +5,11 @@ android {
     buildToolsVersion "23.0.2"
 
     defaultConfig {
-        applicationId "com.github.ndczz.infinityloader.sample"
+        applicationId "com.github.ndczz.infinityloading.sample"
         minSdkVersion 11
         targetSdkVersion 23
         versionCode 1
-        versionName "0.1"
+        versionName "0.2"
     }
     buildTypes {
         release {

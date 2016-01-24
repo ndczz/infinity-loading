@@ -1,3 +1,5 @@
 <resources>
-    <string name="app_name">InfinityLoader Demo</string>
+    <string name="app_name">Infinity Loading Demo</string>
+    <string name="reverse">reverse</string>
+    <string name="drawback">drawBack</string>
 </resources>

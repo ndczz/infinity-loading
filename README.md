@@ -1,4 +1,4 @@
-# Infinity-Loading
+# Infinity Loading
 Simple Android loading view
 
 
@@ -26,10 +26,11 @@ Simple Android loading view
         android:layout_width="120dp"
         android:layout_height="60dp"
         android:layout_gravity="center_horizontal"
-        app:backColor="@color/colorPrimary"
-        app:drawBack="true"
-        app:progressColor="@color/colorAccent"
-        app:strokeWidth="4dp" />
+        app:infl_backColor="@color/colorPrimary"
+        app:infl_drawBack="true"
+        app:infl_reverse="true"
+        app:infl_progressColor="@color/colorAccent"
+        app:infl_strokeWidth="4dp" />
 ```
 
 

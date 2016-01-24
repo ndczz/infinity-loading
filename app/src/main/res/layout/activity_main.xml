@@ -11,14 +11,29 @@
     android:paddingTop="@dimen/activity_vertical_margin"
     tools:context="com.github.ndczz.infinityloading.sample.MainActivity">
 
-
     <com.github.ndczz.infinityloading.InfinityLoading
-        android:id="@+id/loader2"
+        android:id="@+id/inifinityLoading"
         android:layout_width="200dp"
         android:layout_height="100dp"
         android:layout_gravity="center_horizontal"
-        app:backColor="@color/colorPrimaryDark"
-        app:drawBack="true"
-        app:progressColor="@color/colorAccent"
-        app:strokeWidth="8dp" />
+        app:infl_backColor="@color/colorPrimaryDark"
+        app:infl_drawBack="true"
+        app:infl_progressColor="@color/colorAccent"
+        app:infl_strokeWidth="8dp" />
+
+    <CheckBox
+        android:id="@+id/checkboxReverse"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_margin="4dp"
+        android:text="@string/reverse" />
+
+    <CheckBox
+        android:id="@+id/checkboxDrawBack"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_margin="4dp"
+        android:checked="true"
+        android:text="@string/drawback" />
+
 </LinearLayout>

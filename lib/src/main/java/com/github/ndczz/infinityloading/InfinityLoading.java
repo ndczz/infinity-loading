@@ -16,7 +16,7 @@ import android.util.TypedValue;
 import android.view.View;
 
 /**
- * Infninity Loading
+ * Infinity Loading
  * Created by Alex on 22.01.2016.
  */
 public class InfinityLoading extends View {
@@ -27,6 +27,7 @@ public class InfinityLoading extends View {
     private int strokeWidth = 4;
     private int defaultRadius = 40;
     private boolean drawBack = true;
+    private boolean reverse = false;
 
     private Paint backPaint = new Paint();
     private Paint progressPaint = new Paint();
@@ -47,6 +48,7 @@ public class InfinityLoading extends View {
     private boolean isGrowing = true;
     private float progressStartOffset = 0f;
     private float progressEndOffset = minProgressLength;
+    private boolean restored = false;
 
     public InfinityLoading(Context context) {
         super(context);
@@ -65,10 +67,11 @@ public class InfinityLoading extends View {
         DisplayMetrics dm = getContext().getResources().getDisplayMetrics();
         defaultRadius = (int) TypedValue.applyDimension(TypedValue.COMPLEX_UNIT_DIP, defaultRadius, dm);
         strokeWidth = (int) TypedValue.applyDimension(TypedValue.COMPLEX_UNIT_DIP, strokeWidth, dm);
-        backColor = attrs.getColor(R.styleable.InfinityLoading_backColor, backColor);
-        progressColor = attrs.getColor(R.styleable.InfinityLoading_progressColor, progressColor);
-        strokeWidth = (int) attrs.getDimension(R.styleable.InfinityLoading_strokeWidth, strokeWidth);
-        drawBack = attrs.getBoolean(R.styleable.InfinityLoading_drawBack, drawBack);
+        backColor = attrs.getColor(R.styleable.InfinityLoading_infl_backColor, backColor);
+        progressColor = attrs.getColor(R.styleable.InfinityLoading_infl_progressColor, progressColor);
+        strokeWidth = (int) attrs.getDimension(R.styleable.InfinityLoading_infl_strokeWidth, strokeWidth);
+        drawBack = attrs.getBoolean(R.styleable.InfinityLoading_infl_drawBack, drawBack);
+        reverse = attrs.getBoolean(R.styleable.InfinityLoading_infl_reverse, false);
         attrs.recycle();
     }
 
@@ -122,10 +125,13 @@ public class InfinityLoading extends View {
 
         backPathMeasure.setPath(backPath, true);
         backPathLength = backPathMeasure.getLength();
-        normalSpeed = backPathLength / STEPS;
-        growSpeed = 1f * normalSpeed;
-        minProgressLength = 10 * normalSpeed;
-        progressEndOffset = minProgressLength;
+        updateSpeed();
+        minProgressLength = 10 * backPathLength / STEPS;
+        if (restored) {
+            restored = false;
+        } else {
+            progressEndOffset = minProgressLength;
+        }
     }
 
     @Override
@@ -146,11 +152,17 @@ public class InfinityLoading extends View {
 
     private void updateProgress() {
         progressPath.reset();
-
-        if (progressStartOffset > backPathLength)
-            progressStartOffset -= backPathLength;
-        if (progressEndOffset > backPathLength)
-            progressEndOffset -= backPathLength;
+        if (reverse) {
+            if (progressStartOffset < 0)
+                progressStartOffset += backPathLength;
+            if (progressEndOffset < 0)
+                progressEndOffset += backPathLength;
+        } else {
+            if (progressStartOffset > backPathLength)
+                progressStartOffset -= backPathLength;
+            if (progressEndOffset > backPathLength)
+                progressEndOffset -= backPathLength;
+        }
         if (progressEndOffset > progressStartOffset) {
             backPathMeasure.getSegment(progressStartOffset, progressEndOffset, progressPath, true);
         } else {
@@ -174,6 +186,12 @@ public class InfinityLoading extends View {
                 || progressLength > backPathLength - minProgressLength) {
             isGrowing = !isGrowing;
         }
+    }
+
+    private void updateSpeed() {
+        int direction = reverse ? -1 : 1;
+        normalSpeed = backPathLength / STEPS * direction;
+        growSpeed = normalSpeed;
     }
 
     @Override
@@ -223,6 +241,7 @@ public class InfinityLoading extends View {
         bundle.putFloat("progressStartOffset", progressStartOffset);
         bundle.putFloat("progressEndOffset", progressEndOffset);
         bundle.putBoolean("isGrowing", isGrowing);
+        bundle.putBoolean("reverse", reverse);
         bundle.putParcelable("super", super.onSaveInstanceState());
         return bundle;
     }
@@ -234,8 +253,10 @@ public class InfinityLoading extends View {
             progressStartOffset = bundle.getFloat("progressStartOffset");
             progressEndOffset = bundle.getFloat("progressEndOffset");
             isGrowing = bundle.getBoolean("isGrowing");
+            reverse = bundle.getBoolean("reverse");
             state = bundle.getParcelable("super");
         }
+        restored = true;
         super.onRestoreInstanceState(state);
     }
 
@@ -286,5 +307,14 @@ public class InfinityLoading extends View {
 
     public void setDrawBack(boolean drawBack) {
         this.drawBack = drawBack;
+    }
+
+    public boolean isReverse() {
+        return reverse;
+    }
+
+    public void setReverse(boolean reverse) {
+        this.reverse = reverse;
+        updateSpeed();
     }
 }
