@@ -5,7 +5,7 @@ Simple Android loading view
 ![InfinityLoading](https://github.com/ndczz/infinity-loading/blob/master//loading.gif)
 
 ### Integration
-``` xml
+```gradle
   allprojects {
       repositories {
           ....
@@ -14,7 +14,7 @@ Simple Android loading view
   }
 
   dependencies {
-      compile 'com.github.ndczz:infinity-loading:0.1'
+      compile 'com.github.ndczz:infinity-loading:0.2'
   }
 ```
 
@@ -22,7 +22,7 @@ Simple Android loading view
 
 ```xml
 <com.github.ndczz.infinityloading.InfinityLoading
-        android:id="@+id/loader1"
+        android:id="@+id/loading"
         android:layout_width="120dp"
         android:layout_height="60dp"
         android:layout_gravity="center_horizontal"
@@ -32,7 +32,13 @@ Simple Android loading view
         app:infl_progressColor="@color/colorAccent"
         app:infl_strokeWidth="4dp" />
 ```
+or
 
+```java
+  InfinityLoading loading = new InfinityLoading(context);
+  loading.setProgressColor(Color.Red);
+  ...
+```
 
 License
 -------
