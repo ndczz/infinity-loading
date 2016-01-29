@@ -1,6 +1,7 @@
 # Infinity Loading
-Simple Android loading view
+[![Release](https://jitpack.io/v/ndczz/infinity-loading.svg)](https://jitpack.io/#ndczz/infinity-loading) [![Android Arsenal](https://img.shields.io/badge/Android%20Arsenal-infinity--loading-brightgreen.svg?style=true)](https://android-arsenal.com/details/1/3078)
 
+Simple Android loading view
 
 ![InfinityLoading](https://github.com/ndczz/infinity-loading/blob/master//loading.gif)
 
