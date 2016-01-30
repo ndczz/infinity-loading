@@ -17,11 +17,11 @@ public class MainActivity extends AppCompatActivity implements CompoundButton.On
         setContentView(R.layout.activity_main);
 
         infinityLoading = (InfinityLoading) findViewById(R.id.inifinityLoading);
-        CheckBox checboxReverse = (CheckBox) findViewById(R.id.checkboxReverse);
-        CheckBox checboxDrawBack = (CheckBox) findViewById(R.id.checkboxDrawBack);
+        CheckBox checkboxReverse = (CheckBox) findViewById(R.id.checkboxReverse);
+        CheckBox checkboxDrawBack = (CheckBox) findViewById(R.id.checkboxDrawBack);
 
-        checboxReverse.setOnCheckedChangeListener(this);
-        checboxDrawBack.setOnCheckedChangeListener(this);
+        checkboxReverse.setOnCheckedChangeListener(this);
+        checkboxDrawBack.setOnCheckedChangeListener(this);
 
     }
 

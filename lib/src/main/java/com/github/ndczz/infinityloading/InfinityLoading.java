@@ -21,6 +21,7 @@ import android.view.View;
  */
 public class InfinityLoading extends View {
     private static final int STEPS = 200;
+    private static final float PRECISION = 0.001f;
 
     private int backColor = 0xAA000000;
     private int progressColor = 0xAAAA0000;
@@ -43,12 +44,13 @@ public class InfinityLoading extends View {
     private float[] tempTan = new float[2];
     private float normalSpeed = 1f;
     private float growSpeed = 3f;
-    private float minProgressLength = 20f;
-    private float backPathLength;
+    private float minProgressLength = 24f;
+    private float backPathLength = 480f;
     private boolean isGrowing = true;
     private float progressStartOffset = 0f;
     private float progressEndOffset = minProgressLength;
     private boolean restored = false;
+    private float savedBackPathLength = -1;
 
     public InfinityLoading(Context context) {
         super(context);
@@ -124,14 +126,18 @@ public class InfinityLoading extends View {
                 c.x - r, c.y + r);
 
         backPathMeasure.setPath(backPath, true);
-        backPathLength = backPathMeasure.getLength();
-        updateSpeed();
-        minProgressLength = 10 * backPathLength / STEPS;
+        float oldBackPathLenght = backPathLength;
         if (restored) {
             restored = false;
-        } else {
-            progressEndOffset = minProgressLength;
+            oldBackPathLenght = savedBackPathLength;
         }
+        backPathLength = backPathMeasure.getLength();
+        if (compareFloats(oldBackPathLenght, backPathLength) != 0) {
+            progressEndOffset = progressEndOffset * backPathLength / oldBackPathLenght;
+            progressStartOffset = progressStartOffset * backPathLength / oldBackPathLenght;
+        }
+        updateSpeed();
+        minProgressLength = 10 * backPathLength / STEPS;
     }
 
     @Override
@@ -242,6 +248,7 @@ public class InfinityLoading extends View {
         bundle.putFloat("progressEndOffset", progressEndOffset);
         bundle.putBoolean("isGrowing", isGrowing);
         bundle.putBoolean("reverse", reverse);
+        bundle.putFloat("backPathLength", backPathLength);
         bundle.putParcelable("super", super.onSaveInstanceState());
         return bundle;
     }
@@ -254,6 +261,7 @@ public class InfinityLoading extends View {
             progressEndOffset = bundle.getFloat("progressEndOffset");
             isGrowing = bundle.getBoolean("isGrowing");
             reverse = bundle.getBoolean("reverse");
+            savedBackPathLength = bundle.getFloat("backPathLength");
             state = bundle.getParcelable("super");
         }
         restored = true;
@@ -317,4 +325,17 @@ public class InfinityLoading extends View {
         this.reverse = reverse;
         updateSpeed();
     }
+
+    private int compareFloats(float f1, float f2) {
+        if (Math.abs(f1 - f2) < PRECISION) {
+            return 0;
+        } else {
+            if (f1 < f2) {
+                return -1;
+            } else {
+                return 1;
+            }
+        }
+    }
+
 }

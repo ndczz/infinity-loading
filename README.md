@@ -15,7 +15,7 @@ Simple Android loading view
   }
 
   dependencies {
-      compile 'com.github.ndczz:infinity-loading:0.2'
+      compile 'com.github.ndczz:infinity-loading:0.3'
   }
 ```
 
