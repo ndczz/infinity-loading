@@ -153,8 +153,16 @@ public class InfinityLoading extends View {
         canvas.drawCircle(progressStartCoords[0], progressStartCoords[1], strokeWidth / 2, progressEndPaint);
         canvas.drawCircle(progressEndCoords[0], progressEndCoords[1], strokeWidth / 2, progressEndPaint);
 
-        invalidate();
+        handler.sendEmptyMessageDelayed(11, 10);
     }
+
+    private Handler handler = new Handler(){
+        @Override
+        public void handleMessage(Message msg) {
+            invalidate();
+        }
+    };  
+      
 
     private void updateProgress() {
         progressPath.reset();
