@@ -9,6 +9,8 @@ import android.graphics.PathMeasure;
 import android.graphics.PointF;
 import android.graphics.RectF;
 import android.os.Bundle;
+import android.os.Handler;
+import android.os.Message;
 import android.os.Parcelable;
 import android.util.AttributeSet;
 import android.util.DisplayMetrics;
